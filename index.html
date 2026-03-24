@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Flappy World</title>
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Game Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ╔══════════════════════════════════╗
+       ║        GAME CONTAINER           ║
+       ╚══════════════════════════════════╝ -->
+  <div id="gameWrapper">
+
+    <!-- Main game canvas (all gameplay renders here) -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- ── START SCREEN ── -->
+    <div class="screen" id="startScreen">
+      <div class="logo-wrap">
+        <div class="logo-glow"></div>
+        <div class="logo">Flappy</div>
+        <div class="logo">World</div>
+        <div class="logo-sub">Tap to Fly</div>
+      </div>
+
+      <!-- Animated bird preview (drawn via JS onto this canvas) -->
+      <canvas id="birdPreview" class="bird-preview" width="90" height="90"></canvas>
+
+      <button class="btn-play" id="btnPlay">▶&nbsp; PLAY</button>
+
+      <div class="best-score-label">BEST SCORE</div>
+      <div class="best-score-val"  id="startBest">0</div>
+
+      <!-- Theme selector — dots injected by game.js -->
+      <div class="theme-dots" id="themeDots"></div>
+    </div>
+
+    <!-- ── IN-GAME HUD ── -->
+    <div id="hud" class="hidden">
+      <div class="hud-score" id="hudScore">0</div>
+      <div class="hud-best">BEST<span id="hudBest">0</span></div>
+    </div>
+
+    <!-- Active power-up badge (injected by game.js) -->
+    <div id="powerupHud"></div>
+
+    <!-- ── GAME OVER SCREEN ── -->
+    <div class="screen hidden" id="gameOverScreen">
+      <div class="go-title">Game Over</div>
+
+      <div class="go-panel">
+        <div class="go-row">
+          <div class="go-label">Score</div>
+          <div class="go-val"      id="goScore">0</div>
+        </div>
+        <div class="go-divider"></div>
+        <div class="go-row">
+          <div class="go-label">Best</div>
+          <div class="go-val gold" id="goBest">0</div>
+          <div class="go-val new-badge hidden" id="goNewBadge">🏆 NEW!</div>
+        </div>
+      </div>
+
+      <button class="btn-restart" id="btnRestart">↺&nbsp; RETRY</button>
+      <button class="btn-menu"    id="btnMenu">Main Menu</button>
+    </div>
+
+  </div><!-- /gameWrapper -->
+
+  <!-- Game Engine -->
+  <script src="game.js"></script>
+
+</body>
+</html>

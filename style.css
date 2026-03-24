@@ -1,0 +1,409 @@
+/* ═══════════════════════════════════════════════════════
+   FLAPPY WORLD — Stylesheet
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Reset & Base ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1a0a2e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Nunito', sans-serif;
+  touch-action: none;
+}
+
+/* ── Game Wrapper ── */
+#gameWrapper {
+  position: relative;
+  width: 400px;
+  height: 700px;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow:
+    0 0 80px rgba(120, 80, 255, 0.5),
+    0 0 160px rgba(80, 200, 255, 0.2);
+}
+
+canvas {
+  display: block;
+  border-radius: 32px;
+}
+
+/* ══════════════════════════════════════════
+   UI OVERLAYS — Shared
+   ══════════════════════════════════════════ */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32px;
+  transition: opacity 0.35s ease;
+}
+
+.screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════
+   START SCREEN
+   ══════════════════════════════════════════ */
+#startScreen {
+  background: linear-gradient(160deg, #0f0529 0%, #1b0a4a 50%, #0a1a3a 100%);
+}
+
+/* Logo */
+.logo-wrap {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.logo-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(ellipse, rgba(120, 80, 255, 0.4), transparent 70%);
+  filter: blur(20px);
+}
+
+.logo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 62px;
+  background: linear-gradient(135deg, #fff 0%, #c8b4ff 40%, #80d8ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 4px 20px rgba(160, 120, 255, 0.8));
+  position: relative;
+}
+
+.logo-sub {
+  font-family: 'Fredoka One', cursive;
+  font-size: 22px;
+  color: rgba(180, 160, 255, 0.8);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-top: -8px;
+}
+
+/* Bird preview */
+.bird-preview {
+  width: 90px;
+  height: 90px;
+  margin: 24px 0;
+  filter: drop-shadow(0 0 20px rgba(255, 220, 80, 0.8));
+  animation: bobbing 1.4s ease-in-out infinite;
+}
+
+@keyframes bobbing {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50%       { transform: translateY(-12px) rotate(5deg); }
+}
+
+/* Play button */
+.btn-play {
+  position: relative;
+  background: linear-gradient(135deg, #7b2fff, #2ebfff);
+  border: none;
+  border-radius: 50px;
+  padding: 18px 60px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow:
+    0 8px 32px rgba(100, 60, 255, 0.6),
+    0 2px 0 rgba(255, 255, 255, 0.2) inset;
+  transition: transform 0.12s, box-shadow 0.12s;
+  overflow: hidden;
+}
+
+.btn-play::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 60%);
+  border-radius: 50px;
+}
+
+.btn-play:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 16px rgba(100, 60, 255, 0.5);
+}
+
+/* Best score on start */
+.best-score-label {
+  margin-top: 20px;
+  font-size: 16px;
+  color: rgba(180, 160, 255, 0.7);
+  font-weight: 700;
+}
+
+.best-score-val {
+  font-family: 'Fredoka One', cursive;
+  font-size: 36px;
+  color: #ffd84d;
+  filter: drop-shadow(0 2px 8px rgba(255, 200, 0, 0.5));
+}
+
+/* Theme selector dots */
+.theme-dots {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.theme-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.theme-dot.active {
+  transform: scale(1.4);
+  border-color: #fff;
+}
+
+/* ══════════════════════════════════════════
+   HUD (In-Game)
+   ══════════════════════════════════════════ */
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.hud-score {
+  font-family: 'Fredoka One', cursive;
+  font-size: 58px;
+  color: #fff;
+  line-height: 1;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.hud-best {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 700;
+  text-align: center;
+}
+
+.hud-best span {
+  display: block;
+  font-family: 'Fredoka One';
+  font-size: 20px;
+  color: #ffd84d;
+}
+
+/* ══════════════════════════════════════════
+   GAME OVER SCREEN
+   ══════════════════════════════════════════ */
+#gameOverScreen {
+  background: linear-gradient(160deg, rgba(15, 5, 40, 0.97) 0%, rgba(10, 5, 30, 0.97) 100%);
+  backdrop-filter: blur(12px);
+}
+
+.go-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 52px;
+  background: linear-gradient(135deg, #ff6b6b, #ffd84d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 4px 16px rgba(255, 100, 100, 0.5));
+  margin-bottom: 6px;
+}
+
+.go-panel {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 24px 48px;
+  margin: 20px 0 28px;
+  width: 300px;
+  backdrop-filter: blur(4px);
+}
+
+.go-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.go-row:last-child {
+  margin-bottom: 0;
+}
+
+.go-label {
+  font-size: 14px;
+  color: rgba(180, 160, 255, 0.7);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.go-val {
+  font-family: 'Fredoka One';
+  font-size: 34px;
+  color: #fff;
+}
+
+.go-val.gold {
+  color: #ffd84d;
+  filter: drop-shadow(0 2px 8px rgba(255, 200, 0, 0.6));
+}
+
+.go-val.new-badge {
+  font-size: 18px;
+  background: linear-gradient(135deg, #ffd84d, #ff9a3c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { filter: brightness(1); }
+  to   { filter: brightness(1.5) drop-shadow(0 0 8px #ffd84d); }
+}
+
+.go-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 12px 0;
+}
+
+/* Retry button */
+.btn-restart {
+  background: linear-gradient(135deg, #ff6b6b, #ff9a3c);
+  border: none;
+  border-radius: 50px;
+  padding: 16px 52px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 26px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(255, 100, 60, 0.5);
+  transition: transform 0.12s;
+  margin-bottom: 12px;
+}
+
+.btn-restart:active {
+  transform: scale(0.95);
+}
+
+/* Menu button */
+.btn-menu {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  padding: 12px 40px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-menu:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+/* ══════════════════════════════════════════
+   POWER-UP HUD BADGE
+   ══════════════════════════════════════════ */
+#powerupHud {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.pu-badge {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  backdrop-filter: blur(6px);
+  animation: fadeSlideUp 0.3s ease;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════════
+   STARS BACKGROUND (CSS-driven)
+   ══════════════════════════════════════════ */
+#starsBg {
+  position: absolute;
+  inset: 0;
+  border-radius: 32px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: twinkle var(--d) ease-in-out infinite var(--delay);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: var(--min-op); }
+  50%       { opacity: 1; }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
+@media (max-height: 720px) {
+  #gameWrapper {
+    width: 360px;
+    height: 90vh;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  #gameWrapper {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
