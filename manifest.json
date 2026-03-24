@@ -1,6 +1,7 @@
 {
   "name":"Flappy World",
   "short_name":"Flappy",
+  "description":"A fun flappy bird game",
   "start_url":"/flappy-world/",
   "display":"standalone",
   "background_color":"#000000",
